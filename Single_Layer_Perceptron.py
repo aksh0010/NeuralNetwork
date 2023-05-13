@@ -1,0 +1,61 @@
+import numpy as np
+
+
+class Perceptron:
+
+    """
+    A single neuron with the sigmoid function
+    Attributes:
+            inputs: the number of inputs in the perceptron, not counting the bias.
+            bias: The bias term is by default 1.0
+    """
+
+    def __init__(self, inputs, bias=1.0):
+        """ 
+        new perceptron with given number of input (+1 )
+        """
+        self.weights = np.random.rand(inputs+1)*2-1 #just initilizing the array with 0 elements
+        self.bias = bias
+        # pass
+
+    def run(self, x):
+        """
+        Run the perceptron , x is a python List with the input values
+        """
+
+        x_sum = np.dot(np.append(x, self.bias), self.weights)
+        return self.sigmoid(x_sum)
+
+    def set_weights(self, w_init):
+        
+        """ Set the weights . w_init is a python List with the weights""" 
+        # poplating earlier created array with the values
+        self.weights = np.array(w_init)
+
+    def sigmoid(self, x):
+        """ x = 1/ 1+e^-x"""
+        """Evaluate the sigmoid function for the floating point input x"""
+        
+        return 1/(1+np.exp(-x))        
+    
+    
+neuron = Perceptron (inputs =2)
+neuron.set_weights([10,10,-15])  #AND gate
+
+print ("Gate")
+print("0 0 = {0:.10f}".format(neuron.run([0,0])))
+print("0 1 = {0:.10f}".format(neuron.run([0,1])))
+print("1 0 = {0:.10f}".format(neuron.run([1,0])))
+print("1 1 = {0:.10f}".format(neuron.run([1,1])))
+
+# above test is to prove that our perceptron can work as AND gate :
+
+
+neuron.set_weights([15,15,-10])  #OR gate
+
+print ("Gate")
+print("0 0 = {0:.10f}".format(neuron.run([0,0])))
+print("0 1 = {0:.10f}".format(neuron.run([0,1])))
+print("1 0 = {0:.10f}".format(neuron.run([1,0])))
+print("1 1 = {0:.10f}".format(neuron.run([1,1])))
+# above test is to prove that our perceptron can work as OR gate :
